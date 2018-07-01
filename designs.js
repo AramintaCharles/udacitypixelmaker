@@ -1,33 +1,39 @@
 // Select color input
 // Select size input
 
-// When size is submitted by the user, call makeGrid()
+//variables to get canvas element,height,width
+const c = document.getElementById('pixel_canvas');
+let h = $("#input_height");
+let w = $("#input_width");
 
-$(function() {
-    $('#sizePicker').submit(function(event) {
-        event.preventDefault();
-        let height = $('#inputHeight').val();
-        let width = $('#inputWeight').val();
-
-        makeGrid(height, width);
-    
-    });
-
-    //Make the grid
-    function makeGrid(row, column) {
-        $('tr').remove();
-
-        for (let i = 0; i < row; i++) {
-            $('#pixelCanvas').append('<tr></tr>');
-        }
-        for (let j = 0; j < column; j++) {
-            $('tr').append('<td></td>');
-        }
-
-        //Add color to the cell clicked and remove the color when double-clicked
-        $('#pixelCanvas').on('click', 'td', (function() {
-            let color = $('#colorPicker').val();
-            $('td').css('background-color',color);
-        });
-    }    
+//An event listener that comes into action when Submit button is clicked .
+$('#input_submit').click(function(e) {
+    e.preventDefault();
+    makeGrid();
 });
+
+let color = $("#colorPicker");
+
+//To make the grid pattern makegrid is called whenever button is clicked.
+function makeGrid() {
+    c.innerHTML = '';
+    let height = h.val();
+    let width = w.val();
+
+    //A function which fills color in the cell that was clicked and changes the color.
+    let addEvent = function(cell) {
+        cell.addEventListener('click', function() {
+            cell.style.backgroundColor = color.val();
+        });
+    }
+
+    //An event listener such that whenever any cell is clicked it calls addEvent function and changes it's color.
+    for (let i = 0; i < height; i++) {
+        let row = c.insertRow(i);
+        for (let j = 0; j < width; j++) {
+            let cell = row.insertCell(j);
+            cell.addEventListener('click', addEvent(cell));
+        }
+    }
+}
+
