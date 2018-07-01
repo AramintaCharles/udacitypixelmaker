@@ -19,7 +19,7 @@ $(document).ready(function () {
 function makeGrid(height, width) {
   $("tr").remove();
 
-  // Your code goes here!
+  
   for (var x = 1; x <= height; x++) {
     $("#pixelCanvas").append("<tr></tr>");
 
