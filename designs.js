@@ -3,6 +3,19 @@
 
 // When size is submitted by the user, call makeGrid()
 
+$(document).ready(function () {
+  $("#sizePicker").submit(function (event) {
+    event.preventDefault();
+
+    var row;
+    var column;
+    var color;
+
+    row = $("#inputHeight").val();   // height
+    column = $("#inputWidth").val();   // width
+    makeGrid(row, column);
+  });
+});
 function makeGrid(height, width) {
   $("tr").remove();
 
