@@ -2,48 +2,48 @@
 // Select size input
 
 // When size is submitted by the user, call makeGrid()
-$(function() {
-  //Set the grid and current color to #000
-  var theGrid = $("#pixel_canvas");
-  var currentColor = "#000";
+function makeGrid() {
+	console.log("makeGrid is running!")
+	
+	// Select size input
+	
+	var canvas, cell, gridHeight, gridWidth, rows;
+	
+	canvas = $('#pixel_canvas');
+	gridHeight = $('#input_height').val();
+	gridWidth = $('#input_width').val();
+	
+	canvas.children().remove()
+	
+	for (x = 0; x < gridHeight; x++) {
+	canvas.append('<tr></tr>');
+	}
+	
+	rows = $('tr');
+	
+	for (y = 0; y < gridWidth; y++) {
+	rows.append('<td></td>');
+	} 
+	
+	cell = canvas.find('td');
+	
+	// When td is clicked by the user, change color of td
+	cell.click(function() {
+		// Select color input
+		console.log("changeColor is running!");
+		var color;
+		color = $("#colorPicker").val();
+		$(this).attr('bgcolor', color);
+	});
+	
+}
 
-  // Prevent default submit behavior and call makeGrid function
-  $("#sizePicker").submit(function(e) {
-    e.preventDefault();
-    makeGrid();
-  });
+// When size is submitted by the user, call makeGrid()
+var submitQuery;
 
-  //Change the currentColor to the selected one
-  $("#colorPicker").change(function() {
-    currentColor = $(this).val();
-  });
+submitQuery = $('input[type="submit"]')
 
-  //If the user clicks or moves the mouse in the grid
-  //while holding the left mouse button down draw the pixels
-  theGrid.on("mousemove", "td", function(e) {
-    if (e.buttons == 1) {
-      $(this).css("background-color", currentColor); //Draw the td that the user hovers
-    }
-  });
-
-  theGrid.on("click", "td", function(e) {
-    $(this).css("background-color", currentColor); //Draw the td that the user clicks
-  });
-
-  //Build the grid
-  function makeGrid() {
-    //Set the grid dimensions;
-    var gridHeight = $("#input_height").val();
-    var gridWidth = $("#input_width").val();
-    theGrid.empty(); //Empty the grid and start over
-    //Loop -> Create rows
-    for (x = 0; x <= gridHeight - 1; x++) {
-      theGrid.append("<tr>"); //Start Row
-      //Loop -> Create columns for each row
-      for (y = 0; y <= gridWidth - 1; y++) {
-        $("tr:eq(" + x + ")").append("<td></td>");
-      }
-      theGrid.append("</tr>"); //End Row
-    }
-  }
+submitQuery.click(function(event) {
+  event.preventDefault();
+  makeGrid();
 });
